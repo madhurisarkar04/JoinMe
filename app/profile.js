@@ -11,7 +11,7 @@ import {
   Text,
   ScrollView,
   View,
-  Image, Button, TouchableHighlight
+  Image, Button, TouchableNativeFeedback
 } from 'react-native';
 import Search from 'react-native-search-box';
 import Service from './service/service';
@@ -44,49 +44,49 @@ export default class ProfileScreen extends React.Component {
         </View>
         <View style={styles.iconTiles}>
           <View>
-            <TouchableHighlight>
+            <TouchableNativeFeedback>
               <View style={styles.itemCss} >
                 <Image style={styles.itemImg} source={require('./images/account.png')}></Image>
                 <View style={styles.itemContent}>
                   <Text style={styles.name}>Profile</Text>
                 </View>
               </View>
-            </TouchableHighlight>
+            </TouchableNativeFeedback>
           </View>
           <View>
-            <TouchableHighlight>
+            <TouchableNativeFeedback>
               <View style={styles.itemCss} >
                 <Image style={styles.itemImg} source={require('./images/bell.png')}></Image>
                 <View style={styles.itemContent}>
                   <Text style={styles.name}>Notifications</Text>
                 </View>
               </View>
-            </TouchableHighlight>
+            </TouchableNativeFeedback>
           </View>
           <View>
-            <TouchableHighlight>
+            <TouchableNativeFeedback>
               <View style={styles.itemCss} >
                 <Image style={styles.itemImg} source={require('./images/events_user.png')}></Image>
                 <View style={styles.itemContent}>
                   <Text style={styles.name}>My Events</Text>
                 </View>
               </View>
-            </TouchableHighlight>
+            </TouchableNativeFeedback>
           </View>
           <View>
-            <TouchableHighlight>
+            <TouchableNativeFeedback>
               <View style={styles.itemCss} >
                 <Image style={styles.itemImg} source={require('./images/group_icon.png')}></Image>
                 <View style={styles.itemContent}>
                   <Text style={styles.name}>My Groups</Text>
                 </View>
               </View>
-            </TouchableHighlight>
+            </TouchableNativeFeedback>
           </View>
           <View>
-            <TouchableHighlight style={styles.btnCss}>
+            <TouchableNativeFeedback style={styles.btnCss}>
               <Text style={styles.logOut}>LOG OUT</Text>
-            </TouchableHighlight>
+            </TouchableNativeFeedback>
           </View>
         </View>
       </ScrollView>

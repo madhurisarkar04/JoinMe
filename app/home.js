@@ -11,7 +11,7 @@ import {
     ScrollView,
     Text,
     View,
-    Image, TouchableHighlight
+    Image, TouchableNativeFeedback
 } from 'react-native';
 import EventsScreen from './events';
 
@@ -37,7 +37,7 @@ export default class Home extends Component {
             <ScrollView>
             <View style={styles.container}>
                 <View style={styles.bodyContent}>
-                    <TouchableHighlight onPress={() => navigate('Events', { name: 'Jane' })} >
+                    <TouchableNativeFeedback onPress={() => navigate('Events', { name: 'Jane' })} >
                         <View style={styles.itemCss} >
                             <Image style={styles.itemImg} source={require('./images/events.png')}></Image>
                             <View style={styles.itemContent}>
@@ -45,8 +45,8 @@ export default class Home extends Component {
                                 <Text style={styles.description}>Lorem Ipsum is simply dummy text of the printing.</Text>
                             </View>
                         </View>
-                    </TouchableHighlight>
-                    <TouchableHighlight onPress={() => navigate('Group', { name: 'Jane' })} >
+                    </TouchableNativeFeedback>
+                    <TouchableNativeFeedback onPress={() => navigate('Group', { name: 'Jane' })} >
                         <View style={styles.itemCss}>
                             <Image style={styles.itemImg} source={require('./images/groups.png')}></Image>
                             <View style={styles.itemContent}>
@@ -54,8 +54,8 @@ export default class Home extends Component {
                                 <Text style={styles.description}>Lorem Ipsum is simply dummy text of the printing.</Text>
                             </View>
                         </View>
-                    </TouchableHighlight>
-                    <TouchableHighlight onPress={() => navigate('Profile', { name: 'Jane' })} >
+                    </TouchableNativeFeedback>
+                    <TouchableNativeFeedback onPress={() => navigate('Profile', { name: 'Jane' })} >
                         <View style={styles.itemCss}>
                             <Image style={styles.itemImg} source={require('./images/userDashboard.png')}></Image>
                             <View style={styles.itemContent}>
@@ -63,7 +63,16 @@ export default class Home extends Component {
                                 <Text style={styles.description}>Lorem Ipsum is simply dummy text of the printing.</Text>
                             </View>
                         </View>
-                    </TouchableHighlight >
+                    </TouchableNativeFeedback >
+                    <TouchableNativeFeedback onPress={() => navigate('EventDetails', { eventId: 1 })} >
+                        <View style={styles.itemCss}>
+                            <Image style={styles.itemImg} source={require('./images/events.png')}></Image>
+                            <View style={styles.itemContent}>
+                                <Text style={styles.name}>Event Details</Text>
+                                <Text style={styles.description}>Lorem Ipsum is simply dummy text of the printing.</Text>
+                            </View>
+                        </View>
+                    </TouchableNativeFeedback >
                 </View>
             </View>
             </ScrollView>

@@ -11,6 +11,7 @@ import {
     StackNavigator, createStackNavigator
 } from 'react-navigation';
 import EventsScreen from './events';
+import EventDetailsScreen from './eventDetails';
 import GroupScreen from './groups';
 import ProfileScreen from './profile';
 import Home from './home';
@@ -26,5 +27,6 @@ export default StackNavigator({
      },
     Group: { screen: GroupScreen },
     Profile: { screen: ProfileScreen },
-    NewEvent:{screen: EventForm}
+    NewEvent:{screen: EventForm},
+    EventDetails:{screen:EventDetailsScreen},
 });
