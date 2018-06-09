@@ -38,10 +38,10 @@ export default class ProfileScreen extends React.Component {
     return (
       <View>
         <View style={styles.userContainer}>
-          <Image style={styles.userIcon} source={userProfile.userIcon}></Image>
+          <Image style={styles.userIcon} source={require('./images/pavanProfile.jpg')}></Image>
           <Text style={styles.userName}>{userProfile.userName}</Text>
         </View>
-        <View>
+        <View style={styles.iconTiles}>
           <View>
             <TouchableHighlight>
               <View style={styles.itemCss} >
@@ -82,6 +82,11 @@ export default class ProfileScreen extends React.Component {
               </View>
             </TouchableHighlight>
           </View>
+          <View>
+            <TouchableHighlight style={styles.btnCss}>
+              <Text style={styles.logOut}>LOG OUT</Text>
+            </TouchableHighlight>
+          </View>
         </View>
       </View>
     );
@@ -98,23 +103,32 @@ const styles = StyleSheet.create({
     alignItems: 'stretch'
   },
   userContainer: {
-    height: 70,
+    height: 140,
     justifyContent: 'center',
     alignItems: 'center',
+    // flexDirection: 'column',
+    //justifyContent: 'space-between',
+    backgroundColor: '#ffffff',
+    paddingTop: 10,
+    marginBottom: 10
+  },
+  iconTiles: {
+    margin: 20
   },
   userIcon: {
-    padding: 10,
-    width: 40,
-    height: 40,
+    //padding: 20,
+    width: 70,
+    height: 70,
     borderRadius: 50,
   },
   userName: {
-    fontSize: 24,
+    fontSize: 20,
+    color: '#717171',
     fontWeight: 'bold'
   },
   itemCss: {
     backgroundColor: '#ffffff',
-    height: 80,
+    height: 65,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
@@ -122,6 +136,23 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     paddingLeft: 30,
     marginBottom: 20
+  },
+  btnCss: {
+    backgroundColor: '#d9534f',
+    height: 65,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    //paddingLeft: 30,
+    marginBottom: 20
+  },
+  logOut: {
+    alignItems: 'center',
+    fontSize: 20,
+    color: '#ffffff',
+    fontWeight: 'bold'
   },
   itemImg: {
     width: 30,
