@@ -18,6 +18,9 @@ import EventsScreen from './events';
 export default class Home extends Component {
     static navigationOptions = {
         title: 'JOIN ME',
+        headerStyle: {
+            display: 'none'
+        }
     };
     constructor() {
         super();
@@ -31,10 +34,14 @@ export default class Home extends Component {
     render() {
         const { navigate } = this.props.navigation;
         return (
+<<<<<<< HEAD
             <ScrollView>
                 {/* <View style={styles.navigation}>
                     <Image source={require('./images/saketa_logo.png')} style={styles.logoImg}></Image>
                 </View> */}
+=======
+            <View style={styles.container}>
+>>>>>>> cba833820755681403bd4046194b2e136a67ad8f
                 <View style={styles.bodyContent}>
                     <TouchableHighlight onPress={() => navigate('Events', { name: 'Jane' })} >
                         <View style={styles.itemCss} >

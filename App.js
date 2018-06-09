@@ -18,16 +18,10 @@ export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {/* <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit App.js
-        </Text>
-        <Text style={styles.instructions}>
-          {instructions}
-        </Text> */}
-        {/* <Home/> */}
+        <View style={styles.navigation}>
+          <Text>EVENTO</Text>
+          <Image source={require('./images/bell.png')} style={styles.bellIcon}></Image>
+        </View>
         <AppStart />
       </View>
     );
@@ -40,5 +34,14 @@ const styles = StyleSheet.create({
     // justifyContent: 'center',
     // alignItems: 'center',
     backgroundColor: '#F5FCFF',
+  },
+  navigation: {
+    backgroundColor: 'white',
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  bellIcon:{
+    alignItems:'right'
   }
 });
