@@ -64,6 +64,15 @@ export default class Home extends Component {
                             </View>
                         </View>
                     </TouchableHighlight >
+                    <TouchableHighlight onPress={() => navigate('EventDetails', { eventId: 1 })} >
+                        <View style={styles.itemCss}>
+                            <Image style={styles.itemImg} source={require('./images/events.png')}></Image>
+                            <View style={styles.itemContent}>
+                                <Text style={styles.name}>Event Details</Text>
+                                <Text style={styles.description}>Lorem Ipsum is simply dummy text of the printing.</Text>
+                            </View>
+                        </View>
+                    </TouchableHighlight >
                 </View>
             </View>
             </ScrollView>
