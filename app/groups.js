@@ -13,7 +13,7 @@ import {
   View,
   Image,
   FlatList,
-  TouchableHighlight
+  TouchableNativeFeedback
 } from 'react-native';
 import Search from 'react-native-search-box';
 
@@ -83,14 +83,14 @@ export default class GroupScreen extends React.Component {
             <FlatList
               data={this.groups}
               renderItem={({ item }) => <View>
-                <TouchableHighlight>
+                <TouchableNativeFeedback>
                   <View style={styles.itemCss} >
                     <Image style={styles.itemImg} source={require('./images/groupimage.jpg')}></Image>
                     <View style={styles.itemContent}>
                       <Text style={styles.name}>{item.name}</Text>
                     </View>
                   </View>
-                </TouchableHighlight>
+                </TouchableNativeFeedback>
               </View>}
             />
           </View>
