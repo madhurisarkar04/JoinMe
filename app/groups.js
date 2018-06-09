@@ -9,6 +9,7 @@ import {
   Platform,
   StyleSheet,
   Text,
+  ScrollView,
   View,
   Image,
   FlatList,
