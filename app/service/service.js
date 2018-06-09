@@ -1,10 +1,7 @@
 
 export default class Service {
-
-    getUserProfile() {
-        return {
-            userName: "Pavan Kumar",
-            userIcon: "./images/pavanProfile.jpg"
-        }
+    static UserProfile = {
+        userName: "Pavan Kumar",
+        userIcon: "./images/pavanProfile.jpg"
     }
 }

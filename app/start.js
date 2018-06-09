@@ -18,5 +18,5 @@ export default StackNavigator({
     Home: { screen: Home },
     Events: { screen: EventsScreen },
     Group: { screen: GroupScreen },
-    Profile: { screen: ProfileScreen },
+    Profile: { screen: ProfileScreen }
 });

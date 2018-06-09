@@ -17,24 +17,27 @@ import EventsScreen from './events';
 
 
 export default class Home extends Component {
+    static navigationOptions = {
+        title: 'JOIN ME',
+    };
     constructor() {
         super();
         this.onEventsPressButton = this.onEventsPressButton.bind(this);
     }
 
     onEventsPressButton() {
-        navigate('Profile', { name: 'Jane' })
+        navigate('Events', { name: 'Jane' })
     }
 
     render() {
-        const {navigate} =this.props.navigation;
+        const { navigate } = this.props.navigation;
         return (
             <View style={styles.container}>
-                <View style={styles.navigation}>
+                {/* <View style={styles.navigation}>
                     <Image source={require('./images/saketa_logo.png')} style={styles.logoImg}></Image>
-                </View>
+                </View> */}
                 <View style={styles.bodyContent}>
-                    <TouchableHighlight onPress={()=> navigate('Profile', { name: 'Jane' })} >
+                    <TouchableHighlight onPress={() => navigate('Events', { name: 'Jane' })} >
                         <View style={styles.itemCss} >
                             <Image style={styles.itemImg} source={require('./images/events.png')}></Image>
                             <View style={styles.itemContent}>
@@ -43,20 +46,24 @@ export default class Home extends Component {
                             </View>
                         </View>
                     </TouchableHighlight>
-                    <View style={styles.itemCss}>
-                        <Image style={styles.itemImg} source={require('./images/groups.png')}></Image>
-                        <View style={styles.itemContent}>
-                            <Text style={styles.name}>Groups</Text>
-                            <Text style={styles.description}>Lorem Ipsum is simply dummy text of the printing.</Text>
+                    <TouchableHighlight onPress={() => navigate('Group', { name: 'Jane' })} >
+                        <View style={styles.itemCss}>
+                            <Image style={styles.itemImg} source={require('./images/groups.png')}></Image>
+                            <View style={styles.itemContent}>
+                                <Text style={styles.name}>Groups</Text>
+                                <Text style={styles.description}>Lorem Ipsum is simply dummy text of the printing.</Text>
+                            </View>
                         </View>
-                    </View>
-                    <View style={styles.itemCss}>
-                        <Image style={styles.itemImg} source={require('./images/userDashboard.png')}></Image>
-                        <View style={styles.itemContent}>
-                            <Text style={styles.name}>My Profile</Text>
-                            <Text style={styles.description}>Lorem Ipsum is simply dummy text of the printing.</Text>
+                    </TouchableHighlight>
+                    <TouchableHighlight onPress={() => navigate('Profile', { name: 'Jane' })} >
+                        <View style={styles.itemCss}>
+                            <Image style={styles.itemImg} source={require('./images/userDashboard.png')}></Image>
+                            <View style={styles.itemContent}>
+                                <Text style={styles.name}>My Profile</Text>
+                                <Text style={styles.description}>Lorem Ipsum is simply dummy text of the printing.</Text>
+                            </View>
                         </View>
-                    </View>
+                    </TouchableHighlight >
                 </View>
             </View>
         );
