@@ -13,10 +13,12 @@ import EventsScreen from './events';
 import GroupScreen from './groups';
 import ProfileScreen from './profile';
 import Home from './home';
+import EventForm from './eventForm';
 
 export default StackNavigator({
     Home: { screen: Home },
     Events: { screen: EventsScreen },
     Group: { screen: GroupScreen },
-    Profile: { screen: ProfileScreen }
+    Profile: { screen: ProfileScreen },
+    NewEvent:{screen: EventForm}
 });

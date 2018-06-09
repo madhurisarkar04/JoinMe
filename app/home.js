@@ -8,13 +8,12 @@ import React, { Component } from 'react';
 import {
     Platform,
     StyleSheet,
+    ScrollView,
     Text,
     View,
     Image, TouchableHighlight
 } from 'react-native';
 import EventsScreen from './events';
-
-
 
 export default class Home extends Component {
     static navigationOptions = {
@@ -32,7 +31,7 @@ export default class Home extends Component {
     render() {
         const { navigate } = this.props.navigation;
         return (
-            <View style={styles.container}>
+            <ScrollView>
                 {/* <View style={styles.navigation}>
                     <Image source={require('./images/saketa_logo.png')} style={styles.logoImg}></Image>
                 </View> */}
@@ -59,13 +58,23 @@ export default class Home extends Component {
                         <View style={styles.itemCss}>
                             <Image style={styles.itemImg} source={require('./images/userDashboard.png')}></Image>
                             <View style={styles.itemContent}>
-                                <Text style={styles.name}>My Profile</Text>
+                                <Text style={styles.name}>My Profiles</Text>
+                                <Text style={styles.description}>Lorem Ipsum is simply dummy text of the printing.</Text>
+                            </View>
+                        </View>
+                    </TouchableHighlight >
+
+                    <TouchableHighlight onPress={() => navigate('NewEvent', { name: 'Jane' })} >
+                        <View style={styles.itemCss}>
+                            <Image style={styles.itemImg} source={require('./images/userDashboard.png')}></Image>
+                            <View style={styles.itemContent}>
+                                <Text style={styles.name}>Create Event</Text>
                                 <Text style={styles.description}>Lorem Ipsum is simply dummy text of the printing.</Text>
                             </View>
                         </View>
                     </TouchableHighlight >
                 </View>
-            </View>
+            </ScrollView>
         );
     }
 }
@@ -93,6 +102,7 @@ const styles = StyleSheet.create({
         // flex:1,
         flexDirection: 'column',
         justifyContent: 'space-between',
+        marginBottom: 20
     },
     itemCss: {
         backgroundColor: '#ffffff',
