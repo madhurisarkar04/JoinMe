@@ -24,7 +24,7 @@ export default class App extends Component {
             <Image source={require('./app/images/evento.png')} style={[styles.text, { textAlign: 'left' }, styles.leftIcon]}></Image>
           </View>
           <View style={styles.rightContainer}>
-            <Image source={require('./app/images/bell.png')} style={styles.rightIcon}></Image>
+            <Image source={require('./app/images/alarm.png')} style={styles.rightIcon}></Image>
           </View>
         </View>
         <AppStart />

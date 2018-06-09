@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
         flexWrap: 'wrap',
         justifyContent: 'center',
         alignItems: 'center',
-        borderRadius: 10,
+        //borderRadius: 10,
         paddingLeft: 30,
         marginBottom: 20
     },
