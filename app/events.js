@@ -21,11 +21,13 @@ export default class EventsScreen extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     return (
-      <View style={styles.container}>
-        <Search
-          ref="search_box"
-        />
-      </View>
+      <ScrollView>
+        <View style={styles.container}>
+          <Search
+            ref="search_box"
+          />
+        </View>
+      </ScrollView>
     );
   }
 }

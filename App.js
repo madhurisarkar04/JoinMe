@@ -21,9 +21,7 @@ export default class App extends Component {
       <View style={styles.container}>
         <View style={styles.navBar}>
           <View style={styles.leftContainer}>
-            <Text style={[styles.text, { textAlign: 'left' }, styles.textEvento]}>
-              EVENTO
-            </Text>
+            <Image source={require('./app/images/evento.png')} style={[styles.text, { textAlign: 'left' }, styles.leftIcon]}></Image>
           </View>
           <View style={styles.rightContainer}>
             <Image source={require('./app/images/bell.png')} style={styles.rightIcon}></Image>
@@ -69,5 +67,11 @@ const styles = StyleSheet.create({
     width: 25,
     paddingRight: 40,
     resizeMode: 'contain',
+  },
+  leftIcon: {
+    height: 80,
+    width: 80,
+    paddingRight: 40,
+    resizeMode: 'contain'
   }
 });

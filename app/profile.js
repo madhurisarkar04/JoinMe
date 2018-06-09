@@ -9,6 +9,7 @@ import {
   Platform,
   StyleSheet,
   Text,
+  ScrollView,
   View,
   Image, Button, TouchableHighlight
 } from 'react-native';
@@ -36,7 +37,7 @@ export default class ProfileScreen extends React.Component {
       userIcon: "./images/user.png"
     }
     return (
-      <View>
+      <ScrollView>
         <View style={styles.userContainer}>
           <Image style={styles.userIcon} source={require('./images/pavanProfile.jpg')}></Image>
           <Text style={styles.userName}>{userProfile.userName}</Text>
@@ -88,7 +89,7 @@ export default class ProfileScreen extends React.Component {
             </TouchableHighlight>
           </View>
         </View>
-      </View>
+      </ScrollView>
     );
   }
 }
