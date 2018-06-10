@@ -100,7 +100,7 @@ export default class EventsScreen extends React.Component {
 
           {
             this.state.events.map((e,i) => {
-              return <TouchableNativeFeedback onPress={() => navigate("EventDetails")}>
+              return <TouchableNativeFeedback onPress={() => navigate("EventDetails",{eventId:e.id})}>
                 <View style={styles.item}>
                 <View style={{width:20, height:20,marginTop:10, backgroundColor:colors[i]}}></View>
                   <View>
