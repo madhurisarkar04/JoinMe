@@ -24,11 +24,18 @@ import {
 import PopupDialog, { DialogTitle } from 'react-native-popup-dialog';
 import Modal from 'react-native-modal'
 import { Button } from 'react-native';
+import PTRView from 'react-native-pull-to-refresh';
+
 
 export default class EventDetailScreen extends React.Component {
     static navigationOptions = {
         title: 'Event',
     };
+    _refresh() {
+        return new Promise((resolve) => {
+            setTimeout(() => { resolve() }, 2000)
+        });
+    }
     render() {
         const { navigate } = this.props.navigation;
         const eventDetails = {
@@ -39,6 +46,7 @@ export default class EventDetailScreen extends React.Component {
             startDate: "2018-06-09T00:00:00",
             endDate: "2018-06-09T00:00:00",
             isBillable: "true",
+            totalFare: "",
             attendees: [{
                 id: 1,
                 name: "Venkatesh",
@@ -76,108 +84,111 @@ export default class EventDetailScreen extends React.Component {
         var endDate = new Date(eventDetails.endDate);
 
         return (
-            <ScrollView>
-                <View>
-                    <PopupDialog
-                        containerStyle={styles.popupContainer}  dialogTitle={<DialogTitle title="Add Fare" />} ref={(popupDialog) => { this.popupDialog = popupDialog; }}  height={350}
-                    >
-                        <View style={styles.popupInnerContainer}>
-                            <Text style={styles.label}>
-                                Fare
+            <PTRView onRefresh={this._refresh} >
+                <ScrollView>
+                    <View>
+                        <PopupDialog
+                            containerStyle={styles.popupContainer} dialogTitle={<DialogTitle title="Add Fare" />} ref={(popupDialog) => { this.popupDialog = popupDialog; }} height={350}
+                        >
+                            <View style={styles.popupInnerContainer}>
+                                <Text style={styles.label}>
+                                    Fare
                             </Text>
-                            <TextInput
-                                style={styles.formInput}
-                                keyboardType = 'numeric'
-                                value=""
-                                placeholder="Type your fare here!"
+                                <TextInput
+                                    style={styles.formInput}
+                                    keyboardType='numeric'
+                                    value=""
+                                    placeholder="Type your fare here!"
 
-                            />
-                            <Text style={styles.label}>
-                                Comment
+                                />
+                                <Text style={styles.label}>
+                                    Comment
                             </Text>
-                            <TextInput
-                                style={styles.formInput}
-                                value=""
-                                placeholder="Type your comment here!"
-                            />
-                            <View style={styles.btnContainer}>
-                                <TouchableNativeFeedback
-                                    onPress={this.createEvent}
-                                    background={TouchableNativeFeedback.SelectableBackground()}>
-                                    <View style={styles.btnContainerAdd}>
-                                        <Text style={styles.primaryBtn}>Add</Text>
-                                    </View>
-                                </TouchableNativeFeedback>
-                                <TouchableNativeFeedback
-                                    onPress={() => { navigate('EventsDetails', { eventId: 1 }) }}
-                                    background={TouchableNativeFeedback.SelectableBackground()}>
-                                    <View style={styles.btnContainerCancel}>
-                                        <Text style={styles.primaryBtn}>Cancel</Text>
-                                    </View>
-                                </TouchableNativeFeedback>
-                            </View>
-                        </View>
-                    </PopupDialog>
-                </View>
-                <View style={styles.container}>
-
-
-                    <ImageBackground style={styles.eventContainer} source={require('./images/eventBackImg1.jpg')}>
-                        <View style={styles.eventHeaderContainer}>
-                            <View style={styles.headerRule}>
-
-                                <Text style={styles.eventHeaderText}>
-                                    <Image source={require("./images/events.png")} style={styles.eventImg} /> {eventDetails.eventName}
-                                </Text>
-                            </View>
-                            <Text style={styles.eventLocationText}>
-                                {eventDetails.eventLocation}
-                            </Text>
-                        </View>
-                    </ImageBackground>
-                    <View style={styles.eventDateContainer}>
-                        <View style={styles.leftContainer}>
-                            <Text style={[styles.eventDate]}>
-                                {startDate.getUTCMonth()}/{startDate.getUTCDate()}/{startDate.getUTCFullYear()} - {endDate.getUTCMonth()}/{endDate.getUTCDate()}/{endDate.getUTCFullYear()}
-                            </Text>
-                        </View>
-                        <View style={styles.addFare}>
-                            <Text style={[styles.eventDate, styles.addFareText]}
-                                onPress={() => {
-                                    this.popupDialog.show();
-                                }}>
-                                + Add Fare
-                            </Text>
-                        </View>
-                    </View>
-
-                    <View style={styles.eventDescriptionContainer}>
-                        <Text style={[styles.itemCss, styles.descriptionCss]}>
-                            {eventDetails.description}
-                        </Text>
-                    </View>
-                    <View style={[styles.eventDescriptionContainer, styles.userCss]}>
-                        <View style={styles.itemCss}>
-                            {eventDetails.attendees.map((item) => {
-                                return (<View>
-                                    <TouchableNativeFeedback>
-                                        <View style={styles.userItemCss} >
-                                            <Image style={styles.itemImg} source={require('./images/user.png')}></Image>
-                                            <View style={styles.itemContent}>
-                                                <Text style={styles.name}>{item.name}</Text>
-                                            </View>
+                                <TextInput
+                                    style={styles.formInput}
+                                    value=""
+                                    placeholder="Type your comment here!"
+                                />
+                                <View style={styles.btnContainer}>
+                                    <TouchableNativeFeedback
+                                        onPress={this.createEvent}
+                                        background={TouchableNativeFeedback.SelectableBackground()}>
+                                        <View style={styles.btnContainerAdd}>
+                                            <Text style={styles.primaryBtn}>Add</Text>
                                         </View>
                                     </TouchableNativeFeedback>
-                                </View>)
-
-                            })}
-                            
-
-                        </View>
+                                    <TouchableNativeFeedback
+                                        onPress={() => { navigate('EventsDetails', { eventId: 1 }) }}
+                                        background={TouchableNativeFeedback.SelectableBackground()}>
+                                        <View style={styles.btnContainerCancel}>
+                                            <Text style={styles.primaryBtn}>Cancel</Text>
+                                        </View>
+                                    </TouchableNativeFeedback>
+                                </View>
+                            </View>
+                        </PopupDialog>
                     </View>
+                    <View style={styles.container}>
 
-                </View>
-            </ScrollView>
+
+                        <ImageBackground style={styles.eventContainer} source={require('./images/eventBackImg1.jpg')}>
+                            <View style={styles.eventHeaderContainer}>
+                                <View style={styles.headerRule}>
+
+                                    <Text style={styles.eventHeaderText}>
+                                        <Image source={require("./images/events.png")} style={styles.eventImg} /> {eventDetails.eventName}
+                                    </Text>
+                                </View>
+                                <Text style={styles.eventLocationText}>
+                                    {eventDetails.eventLocation}
+                                </Text>
+                            </View>
+                        </ImageBackground>
+                        <View style={styles.eventDateContainer}>
+                            <View style={styles.leftContainer}>
+                                <Text style={[styles.eventDate]}>
+                                    {startDate.getUTCMonth()}/{startDate.getUTCDate()}/{startDate.getUTCFullYear()} - {endDate.getUTCMonth()}/{endDate.getUTCDate()}/{endDate.getUTCFullYear()}
+                                </Text>
+                            </View>
+                            <View style={styles.addFare}>
+                                <Text style={[styles.eventDate, styles.addFareText]}
+                                    onPress={() => {
+                                        this.popupDialog.show();
+                                    }}>
+                                    + Add Fare
+                            </Text>
+                            </View>
+                        </View>
+
+                        <View style={styles.eventDescriptionContainer}>
+                            <Text style={[styles.itemCss, styles.descriptionCss]}>
+                                {eventDetails.description}
+                            </Text>
+                        </View>
+                        <View style={[styles.eventDescriptionContainer, styles.userCss]}>
+                            <View style={styles.itemCss}>
+                                {eventDetails.attendees.map((item) => {
+                                    return (<View>
+                                        <TouchableNativeFeedback>
+                                            <View style={styles.userItemCss} >
+                                                <Image style={styles.itemImg} source={require('./images/user.png')}></Image>
+                                                <View style={styles.itemContent}>
+                                                    <Text style={styles.name}>{item.name}</Text>
+                                                </View>
+                                            </View>
+                                        </TouchableNativeFeedback>
+                                    </View>)
+
+                                })}
+
+
+                            </View>
+                        </View>
+
+                    </View>
+                </ScrollView>
+            </PTRView>
+
         );
     }
 }
@@ -298,26 +309,26 @@ const styles = StyleSheet.create({
         marginTop: 15,
         alignItems: 'center',
         backgroundColor: '#00acec',
-        
+
     },
 
     btnContainerCancel: {
         marginTop: 15,
         alignItems: 'center',
         backgroundColor: '#e0e0e0',
-       
+
     },
     primaryBtn: {
         margin: 15,
         fontSize: 20,
         color: "#fff",
-        
+
     },
-    popupContainer:{
-        padding:10
+    popupContainer: {
+        padding: 10
     },
-    popupInnerContainer:{
-        padding:10
+    popupInnerContainer: {
+        padding: 10
     },
 
 });
