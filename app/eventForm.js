@@ -40,6 +40,7 @@ export default class EventForm extends React.Component {
     };
 
     this.onChange = this.onChange.bind(this);
+    this.createEvent = this.createEvent.bind(this);
   }
 
   createEvent(){
@@ -53,6 +54,12 @@ export default class EventForm extends React.Component {
             
         }        
     }
+
+    if(this.props.navigation.params && this.props.navigation.params.refresh){
+        this.props.navigation.params.refresh();
+    }
+
+    this.props.navigation.navigate('Events');
   }
 
   onChange(updatedEvent){
@@ -160,7 +167,7 @@ export default class EventForm extends React.Component {
             </View>
 
             <TouchableNativeFeedback
-                onPress={this._onPressButton}
+                onPress={this.createEvent}
                 background={TouchableNativeFeedback.SelectableBackground()}>
                 <View style={styles.btnContainer}>
                     <Text style={styles.primaryBtn}>Create Event</Text>

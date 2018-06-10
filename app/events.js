@@ -21,11 +21,12 @@ import {
   FlatList
 } from 'react-native';
 import Search from 'react-native-search-box';
+import { EventService } from './service/eventService';
 
 export default class EventsScreen extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
-    const { params = {} } = navigation.state;
+  const { params = {} } = navigation.state;
 
     return {
       title: "Events",
@@ -41,8 +42,40 @@ export default class EventsScreen extends React.Component {
             </TouchableOpacity>) // custom component
     };
   };
+
+  eventService = new EventService();
   constructor(){
     super();
+    this.state = {
+      events:[]
+    };
+
+    this.refreshEventData = this.refreshEventData.bind(this);
+  }
+  
+  componentDidMount(){
+    this.setState({
+      events: this.eventService.getEvents() || []
+    });
+
+    this._sub = this.props.navigation.addListener(
+      'didFocus',
+      this.refreshEventData
+    );
+  }
+
+  refreshEventData(){
+    this.setState({
+      events: this.eventService.getEvents() || []
+    });
+  }
+
+  componentDidUpdate(){
+    var events = this.eventService.getEvents();
+    if(this.state.events != events)
+    this.setState({
+      events: events || []
+    });
   }
 
   render() {
@@ -54,28 +87,7 @@ export default class EventsScreen extends React.Component {
             ref="search_box"
           />
           <FlatList
-            data={[
-              {
-                key: 1,
-                name: "Event1",
-                color: "#8d1845"
-              },
-              {
-                key: 2,
-                name: "Event2",
-                color: "blue"
-              },
-              {
-                key: 3,
-                name: "Event3",
-                color: "#188d2a"
-              }, {
-                key: 4,
-                name: "Event4",
-                color: "#05a59b"
-              }
-
-            ]}
+            data={this.state.events}
             renderItem={({ item }) => <View style={styles.item}>
               <View style={{ width: 20, height: 20, marginTop: 10, backgroundColor: item.color }}>
 
@@ -84,7 +96,7 @@ export default class EventsScreen extends React.Component {
                 <Text style={{ fontSize: 22, paddingLeft: 15 }}>{item.name}</Text>
                 <Text style={{ fontSize: 12, paddingLeft: 15 }}>
                   <Text>XYZ</Text>
-                  <Text style={{ marginLeft: 15 }}>XYZ</Text>
+                  <Text style={{ marginLeft: 15 }}>{item.description}</Text>
                 </Text>
               </View>
             </View>}
