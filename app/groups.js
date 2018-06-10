@@ -83,7 +83,7 @@ export default class GroupScreen extends React.Component {
             <FlatList
               data={this.groups}
               renderItem={({ item }) => <View>
-                <TouchableNativeFeedback>
+                <TouchableNativeFeedback onPress={() => navigate('GroupDetailsScreen', item)}>
                   <View style={styles.itemCss} >
                     <Image style={styles.itemImg} source={require('./images/groupimage.jpg')}></Image>
                     <View style={styles.itemContent}>
