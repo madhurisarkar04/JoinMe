@@ -6,8 +6,23 @@ export class EventService{
 
         new Event({
             id:1,
-            name: 'staic event',
-            description:'existing data here'
+            name: 'Trekking Vikarabad',
+            description:'Lets go out to vikarabad for trekking :p'
+        }),
+        new Event({
+            id:2,
+            name: 'Welcome Freshers',
+            description:'An event to welcome freshers'
+        }),
+        new Event({
+            id:3,
+            name: 'Weekend get together',
+            description:'Lets have a weekend party!!!'
+        }),
+        new Event({
+            id:4,
+            name: 'Technovert Outing',
+            description:'A regular Technovert outing'
         })
     ];
 
