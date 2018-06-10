@@ -10,6 +10,7 @@ import {
     Platform,
     StyleSheet,
     Text,
+    TextInput,
     View,
     Image,
     ImageBackground,
@@ -78,10 +79,43 @@ export default class EventDetailScreen extends React.Component {
             <ScrollView>
                 <View>
                     <PopupDialog
-                        containerStyle={margin = 10} dialogTitle={<DialogTitle title="Add Fare" />} ref={(popupDialog) => { this.popupDialog = popupDialog; }} height={200} width={350}
+                        containerStyle={styles.popupContainer}  dialogTitle={<DialogTitle title="Add Fare" />} ref={(popupDialog) => { this.popupDialog = popupDialog; }}  height={350}
                     >
-                        <View>
-                            <Text>FARE</Text>
+                        <View style={styles.popupInnerContainer}>
+                            <Text style={styles.label}>
+                                Fare
+                            </Text>
+                            <TextInput
+                                style={styles.formInput}
+                                keyboardType = 'numeric'
+                                value=""
+                                placeholder="Type your fare here!"
+
+                            />
+                            <Text style={styles.label}>
+                                Comment
+                            </Text>
+                            <TextInput
+                                style={styles.formInput}
+                                value=""
+                                placeholder="Type your comment here!"
+                            />
+                            <View style={styles.btnContainer}>
+                                <TouchableNativeFeedback
+                                    onPress={this.createEvent}
+                                    background={TouchableNativeFeedback.SelectableBackground()}>
+                                    <View style={styles.btnContainerAdd}>
+                                        <Text style={styles.primaryBtn}>Add</Text>
+                                    </View>
+                                </TouchableNativeFeedback>
+                                <TouchableNativeFeedback
+                                    onPress={() => { navigate('EventsDetails', { eventId: 1 }) }}
+                                    background={TouchableNativeFeedback.SelectableBackground()}>
+                                    <View style={styles.btnContainerCancel}>
+                                        <Text style={styles.primaryBtn}>Cancel</Text>
+                                    </View>
+                                </TouchableNativeFeedback>
+                            </View>
                         </View>
                     </PopupDialog>
                 </View>
@@ -137,19 +171,7 @@ export default class EventDetailScreen extends React.Component {
                                 </View>)
 
                             })}
-                            {/* <FlatList
-                                data={eventDetails.attendees}
-                                renderItem={({ item }) => <View>
-                                    <TouchableNativeFeedback>
-                                        <View style={styles.userItemCss} >
-                                            <Image style={styles.itemImg} source={require('./images/user.png')}></Image>
-                                            <View style={styles.itemContent}>
-                                                <Text style={styles.name}>{item.name}</Text>
-                                            </View>
-                                        </View>
-                                    </TouchableNativeFeedback>
-                                </View>}
-                            /> */}
+                            
 
                         </View>
                     </View>
@@ -223,11 +245,6 @@ const styles = StyleSheet.create({
     },
     itemCss: {
         backgroundColor: '#ffffff',
-        // flexDirection: 'row',
-        // flexWrap: 'wrap',
-        // justifyContent: 'center',
-        // alignItems: 'center',
-        //borderRadius: 10,
     },
     descriptionCss: {
         padding: 10
@@ -276,6 +293,31 @@ const styles = StyleSheet.create({
     },
     popupDialog: {
         margin: 20
+    },
+    btnContainerAdd: {
+        marginTop: 15,
+        alignItems: 'center',
+        backgroundColor: '#00acec',
+        
+    },
+
+    btnContainerCancel: {
+        marginTop: 15,
+        alignItems: 'center',
+        backgroundColor: '#e0e0e0',
+       
+    },
+    primaryBtn: {
+        margin: 15,
+        fontSize: 20,
+        color: "#fff",
+        
+    },
+    popupContainer:{
+        padding:10
+    },
+    popupInnerContainer:{
+        padding:10
     },
 
 });
