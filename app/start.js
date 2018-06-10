@@ -3,6 +3,7 @@ import {
     Platform,
     StyleSheet,
     Text,
+    TouchableOpacity,
     View,
     Image
 } from 'react-native';
@@ -18,7 +19,12 @@ import EventForm from './eventForm';
 
 export default StackNavigator({
     Home: { screen: Home },
-    Events: { screen: EventsScreen },
+    Events: { screen: StackNavigator({
+            EventsScreen:{
+                screen: EventsScreen,
+            },
+        })
+     },
     Group: { screen: GroupScreen },
     Profile: { screen: ProfileScreen },
     NewEvent:{screen: EventForm},

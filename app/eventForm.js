@@ -13,11 +13,13 @@ import {
   Switch,
   View,
   Image,
+  ScrollView,   
   TouchableNativeFeedback
 } from 'react-native';
 import Search from 'react-native-search-box';
 import {Event} from './models/models';
 import DatePicker from 'react-native-datepicker'
+import { EventService } from './service/eventService';
 
 export default class EventForm extends React.Component {
   static navigationOptions = {
@@ -40,6 +42,19 @@ export default class EventForm extends React.Component {
     this.onChange = this.onChange.bind(this);
   }
 
+  createEvent(){
+
+    var service = new EventService();
+    if(this.state.event && this.state.event.name){
+        if(!this.state.event.id){
+            service.createEvent(this.state.event);
+        }
+        else{
+            
+        }        
+    }
+  }
+
   onChange(updatedEvent){
     this.setState({
         event: {...this.state.event, ...updatedEvent}
@@ -49,6 +64,7 @@ export default class EventForm extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     return (
+        <ScrollView>
       <View style={styles.container}>
         <View style={styles.formBody}>
             <Text style={styles.label}>
@@ -65,9 +81,9 @@ export default class EventForm extends React.Component {
                 Description
             </Text>
             <TextInput
+            style={{fontSize: 20}}
             multiline={true}
-            numberOfLines={2}
-            style={styles.formInput}
+            numberOfLines={4}
             value={this.state.event.description}
             placeholder="Write aboutyour event here!"
             onChangeText={(text) => this.onChange({description: text})}
@@ -151,7 +167,7 @@ export default class EventForm extends React.Component {
                 </View>
             </TouchableNativeFeedback>
             <TouchableNativeFeedback
-                onPress={this._onPressButton}
+                onPress={()=>{navigate('Events')}}
                 background={TouchableNativeFeedback.SelectableBackground()}>
                 <View style={styles.btnContainerCancel}>
                     <Text style={styles.primaryBtn}>Cancel</Text>
@@ -159,6 +175,7 @@ export default class EventForm extends React.Component {
             </TouchableNativeFeedback>
         </View>
     </View>
+    </ScrollView>
     );
   }
 }
@@ -182,6 +199,7 @@ const styles = StyleSheet.create({
         paddingTop:10,
         paddingBottom:10,
         fontSize:20
+        
     },
     label:{
         fontSize:20,
