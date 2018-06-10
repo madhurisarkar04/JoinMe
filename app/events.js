@@ -19,75 +19,78 @@ import {
   TouchableOpacity,
   DeviceEventEmitter,
   Image,
-  FlatList
+  FlatList,
+  TouchableNativeFeedback
 } from 'react-native';
 import Search from 'react-native-search-box';
 import { EventService } from './service/eventService';
+import EventDetailScreen from './eventDetails';
 
 export default class EventsScreen extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
-  const { params = {} } = navigation.state;
+    const { params = {} } = navigation.state;
 
     return {
       title: "Events",
-      headerStyle: { 
-        paddingRight: 10, 
-        paddingLeft: 10, 
-       },
-      headerTitleStyle:{
-        width:100,
+      headerStyle: {
+        paddingRight: 10,
+        paddingLeft: 10,
+      },
+      headerTitleStyle: {
+        width: 100,
       },
       headerRight: (<TouchableOpacity onPress={() => navigation.navigate("NewEvent")} title="New">
-                  <Text> + New Event</Text>
-            </TouchableOpacity>) // custom component
+        <Text> + New Event</Text>
+      </TouchableOpacity>) // custom component
     };
   };
 
   eventService = new EventService();
-  constructor(){
+  constructor() {
     super();
     this.state = {
-      events:[]
+      events: []
     };
 
     this.refreshEventsData = this.refreshEventsData.bind(this);
   }
-  
-  componentDidMount(){
+
+  componentDidMount() {
     this.setState({
       events: this.eventService.getEvents() || []
     });
 
-    this.sub = DeviceEventEmitter.addListener('refreshData', (e)=>{
+    this.sub = DeviceEventEmitter.addListener('refreshData', (e) => {
       var events = this.eventService.getEvents();
-      alert(events.map(e=> e.name).join(',') + 'triger', events.map(e=> e.name).join(''));
-      setTimeout(()=>{
+      alert(events.map(e => e.name).join(',') + 'triger', events.map(e => e.name).join(''));
+      setTimeout(() => {
         this.setState({
           events: events || []
         });
-      },500);
-      
+      }, 500);
+
       this.refreshEventsData();
     });
   }
 
-  refreshEventsData(){
+  refreshEventsData() {
     this.setState({
       events: this.eventService.getEvents() || []
     });
   }
 
-  componentDidUpdate(){
+  componentDidUpdate() {
     var events = this.eventService.getEvents();
-    if(this.state.events != events)
-    this.setState({
-      events: events || []
-    });
+    if (this.state.events != events)
+      this.setState({
+        events: events || []
+      });
   }
 
   render() {
     const { navigate } = this.props.navigation;
+    const colors=['#609','#f1d543','#5cf143','#d843f1','#43d8f1']
     return (
       <ScrollView>
         <View style={styles.container}>
@@ -96,17 +99,16 @@ export default class EventsScreen extends React.Component {
           />
 
           {
-            this.state.events.map(e=>{
-              return <View>
-                <View style={{ width: 20, height: 20, marginTop: 10, backgroundColor: e.color }}>
-                  </View>
+            this.state.events.map((e,i) => {
+              return <TouchableNativeFeedback onPress={() => navigate("EventDetails",{eventId:e.id})}>
+                <View style={styles.item}>
+                <View style={{width:20, height:20,marginTop:10, backgroundColor:colors[i]}}></View>
                   <View>
                     <Text style={{ fontSize: 22, paddingLeft: 15 }}>{e.name}</Text>
-                    <Text style={{ fontSize: 12, paddingLeft: 15 }}>
-                      <Text style={{ marginLeft: 15 }}>{e.description}</Text>
-                    </Text>
+                    <Text style={{ fontSize: 12, paddingLeft: 15 }}>{e.description}</Text>
                   </View>
-              </View>
+                </View>
+              </TouchableNativeFeedback>
             })
           }
         </View>
