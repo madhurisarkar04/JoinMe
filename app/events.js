@@ -63,7 +63,6 @@ export default class EventsScreen extends React.Component {
 
     this.sub = DeviceEventEmitter.addListener('refreshData', (e) => {
       var events = this.eventService.getEvents();
-      alert(events.map(e => e.name).join(',') + 'triger', events.map(e => e.name).join(''));
       setTimeout(() => {
         this.setState({
           events: events || []
