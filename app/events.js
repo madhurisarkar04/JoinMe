@@ -17,6 +17,7 @@ import {
   Text,
   View,
   TouchableOpacity,
+  DeviceEventEmitter,
   Image,
   FlatList
 } from 'react-native';
@@ -50,7 +51,7 @@ export default class EventsScreen extends React.Component {
       events:[]
     };
 
-    this.refreshEventData = this.refreshEventData.bind(this);
+    this.refreshEventsData = this.refreshEventsData.bind(this);
   }
   
   componentDidMount(){
@@ -58,13 +59,20 @@ export default class EventsScreen extends React.Component {
       events: this.eventService.getEvents() || []
     });
 
-    this._sub = this.props.navigation.addListener(
-      'didFocus',
-      this.refreshEventData
-    );
+    this.sub = DeviceEventEmitter.addListener('refreshData', (e)=>{
+      var events = this.eventService.getEvents();
+      alert(events.map(e=> e.name).join(',') + 'triger', events.map(e=> e.name).join(''));
+      setTimeout(()=>{
+        this.setState({
+          events: events || []
+        });
+      },500);
+      
+      this.refreshEventsData();
+    });
   }
 
-  refreshEventData(){
+  refreshEventsData(){
     this.setState({
       events: this.eventService.getEvents() || []
     });
@@ -86,21 +94,21 @@ export default class EventsScreen extends React.Component {
           <Search
             ref="search_box"
           />
-          <FlatList
-            data={this.state.events}
-            renderItem={({ item }) => <View style={styles.item}>
-              <View style={{ width: 20, height: 20, marginTop: 10, backgroundColor: item.color }}>
 
+          {
+            this.state.events.map(e=>{
+              return <View>
+                <View style={{ width: 20, height: 20, marginTop: 10, backgroundColor: e.color }}>
+                  </View>
+                  <View>
+                    <Text style={{ fontSize: 22, paddingLeft: 15 }}>{e.name}</Text>
+                    <Text style={{ fontSize: 12, paddingLeft: 15 }}>
+                      <Text style={{ marginLeft: 15 }}>{e.description}</Text>
+                    </Text>
+                  </View>
               </View>
-              <View>
-                <Text style={{ fontSize: 22, paddingLeft: 15 }}>{item.name}</Text>
-                <Text style={{ fontSize: 12, paddingLeft: 15 }}>
-                  <Text>XYZ</Text>
-                  <Text style={{ marginLeft: 15 }}>{item.description}</Text>
-                </Text>
-              </View>
-            </View>}
-          />
+            })
+          }
         </View>
       </ScrollView>
     );

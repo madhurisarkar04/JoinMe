@@ -13,7 +13,8 @@ import {
   Switch,
   View,
   Image,
-  ScrollView,   
+  ScrollView,  
+  DeviceEventEmitter, 
   TouchableNativeFeedback
 } from 'react-native';
 import Search from 'react-native-search-box';
@@ -55,11 +56,8 @@ export default class EventForm extends React.Component {
         }        
     }
 
-    if(this.props.navigation.params && this.props.navigation.params.refresh){
-        this.props.navigation.params.refresh();
-    }
-
-    this.props.navigation.navigate('Events');
+    DeviceEventEmitter.emit('refreshData',  {});
+    this.props.navigation.navigate('Events',{name:'jaskjas'});
   }
 
   onChange(updatedEvent){
@@ -88,7 +86,7 @@ export default class EventForm extends React.Component {
                 Description
             </Text>
             <TextInput
-            style={{fontSize: 20}}
+            style={{fontSize: 20, margin:0}}
             multiline={true}
             numberOfLines={4}
             value={this.state.event.description}
