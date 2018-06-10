@@ -15,15 +15,19 @@ import {
     ImageBackground,
     ScrollView,
     FlatList,
-    TouchableNativeFeedback
+    TouchableNativeFeedback,
+    TouchableOpacity
 } from 'react-native';
-import Search from 'react-native-search-box';
+
+
+import PopupDialog, { DialogTitle } from 'react-native-popup-dialog';
+import Modal from 'react-native-modal'
+import { Button } from 'react-native';
 
 export default class EventDetailScreen extends React.Component {
     static navigationOptions = {
         title: 'Event',
     };
-
     render() {
         const { navigate } = this.props.navigation;
         const eventDetails = {
@@ -69,8 +73,18 @@ export default class EventDetailScreen extends React.Component {
 
         var startDate = new Date(eventDetails.startDate);
         var endDate = new Date(eventDetails.endDate);
+
         return (
             <ScrollView>
+                <View>
+                    <PopupDialog
+                        containerStyle={margin = 10} dialogTitle={<DialogTitle title="Add Fare" />} ref={(popupDialog) => { this.popupDialog = popupDialog; }} height={200} width={350}
+                    >
+                        <View>
+                            <Text>FARE</Text>
+                        </View>
+                    </PopupDialog>
+                </View>
                 <View style={styles.container}>
 
 
@@ -88,9 +102,19 @@ export default class EventDetailScreen extends React.Component {
                         </View>
                     </ImageBackground>
                     <View style={styles.eventDateContainer}>
-                        <Text style={styles.eventDate}>
-                            {startDate.getUTCMonth()}/{startDate.getUTCDate()}/{startDate.getUTCFullYear()} - {endDate.getUTCMonth()}/{endDate.getUTCDate()}/{endDate.getUTCFullYear()}
-                        </Text>
+                        <View style={styles.leftContainer}>
+                            <Text style={[styles.eventDate]}>
+                                {startDate.getUTCMonth()}/{startDate.getUTCDate()}/{startDate.getUTCFullYear()} - {endDate.getUTCMonth()}/{endDate.getUTCDate()}/{endDate.getUTCFullYear()}
+                            </Text>
+                        </View>
+                        <View style={styles.addFare}>
+                            <Text style={[styles.eventDate, styles.addFareText]}
+                                onPress={() => {
+                                    this.popupDialog.show();
+                                }}>
+                                + Add Fare
+                            </Text>
+                        </View>
                     </View>
 
                     <View style={styles.eventDescriptionContainer}>
@@ -100,13 +124,20 @@ export default class EventDetailScreen extends React.Component {
                     </View>
                     <View style={[styles.eventDescriptionContainer, styles.userCss]}>
                         <View style={styles.itemCss}>
-                            {/* {eventDetails.attendees.map((attendee) => {
-                                return <Image
-                                    style={{ width: 25, height: 25 }}
-                                    source={require('./images/user.png')}
-                                />
-                            })} */}
-                            <FlatList
+                            {eventDetails.attendees.map((item) => {
+                                return (<View>
+                                    <TouchableNativeFeedback>
+                                        <View style={styles.userItemCss} >
+                                            <Image style={styles.itemImg} source={require('./images/user.png')}></Image>
+                                            <View style={styles.itemContent}>
+                                                <Text style={styles.name}>{item.name}</Text>
+                                            </View>
+                                        </View>
+                                    </TouchableNativeFeedback>
+                                </View>)
+
+                            })}
+                            {/* <FlatList
                                 data={eventDetails.attendees}
                                 renderItem={({ item }) => <View>
                                     <TouchableNativeFeedback>
@@ -118,7 +149,8 @@ export default class EventDetailScreen extends React.Component {
                                         </View>
                                     </TouchableNativeFeedback>
                                 </View>}
-                            />
+                            /> */}
+
                         </View>
                     </View>
 
@@ -168,10 +200,12 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
     },
     eventDateContainer: {
+        flex: 1,
         padding: 15,
         paddingLeft: 20,
+        paddingRight: 20,
         backgroundColor: "#5fba7de6",
-
+        flexDirection: "row"
     },
     eventDate: {
         fontSize: 20,
@@ -222,8 +256,27 @@ const styles = StyleSheet.create({
     itemContent: {
         height: 50,
         flex: 3,
-        paddingLeft: 30,
+        paddingLeft: 20,
         justifyContent: 'center'
     },
+    addFare: {
+        flex: 1,
+        justifyContent: "flex-end",
+        flexDirection: 'row',
+
+    },
+    leftContainer: {
+        flex: 3,
+        flexDirection: 'row',
+        justifyContent: 'flex-start',
+
+    },
+    addFareText: {
+        fontSize: 18
+    },
+    popupDialog: {
+        margin: 20
+    },
+
 });
 
