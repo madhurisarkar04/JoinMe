@@ -88,7 +88,7 @@ export default class EventDetailScreen extends React.Component {
                 <ScrollView>
                     <View>
                         <PopupDialog
-                            containerStyle={styles.popupContainer} dialogTitle={<DialogTitle title="Add Fare" />} ref={(popupDialog) => { this.popupDialog = popupDialog; }} height={350}
+                            containerStyle={styles.popupContainer}  ref={(popupDialog) => { this.popupDialog = popupDialog; }} height={350}
                         >
                             <View style={styles.popupInnerContainer}>
                                 <Text style={styles.label}>

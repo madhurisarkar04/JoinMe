@@ -64,7 +64,7 @@ export default class Home extends Component {
                             </View>
                         </View>
                     </TouchableNativeFeedback >
-                    <TouchableNativeFeedback onPress={() => navigate('EventDetails', { eventId: 1 })} >
+                    {/* <TouchableNativeFeedback onPress={() => navigate('EventDetails', { eventId: 1 })} >
                         <View style={styles.itemCss}>
                             <Image style={styles.itemImg} source={require('./images/events.png')}></Image>
                             <View style={styles.itemContent}>
@@ -72,7 +72,7 @@ export default class Home extends Component {
                                 <Text style={styles.description}>Lorem Ipsum is simply dummy text of the printing.</Text>
                             </View>
                         </View>
-                    </TouchableNativeFeedback >
+                    </TouchableNativeFeedback > */}
                 </View>
             </View>
             </ScrollView>

@@ -26,6 +26,7 @@ import Search from 'react-native-search-box';
 //import SearchBar from 'react-native-searchbar';
 import { EventService } from './service/eventService';
 import EventDetailScreen from './eventDetails';
+import PTRView from 'react-native-pull-to-refresh';
 
 export default class EventsScreen extends React.Component {
 
@@ -94,11 +95,17 @@ export default class EventsScreen extends React.Component {
         events: events || []
       });
   }
+  _refresh() {
+    return new Promise((resolve) => {
+        setTimeout(() => { resolve() }, 2000)
+    });
+}
 
   render() {
     const { navigate } = this.props.navigation;
     const colors = ['#609', '#f1d543', '#5cf143', '#d843f1', '#43d8f1']
     return (
+      <PTRView onRefresh={this._refresh} >
       <ScrollView>
         <View style={styles.container}>
           <Search
@@ -117,7 +124,7 @@ export default class EventsScreen extends React.Component {
 
           {
             this.state.events.map((e, i) => {
-              return <TouchableNativeFeedback >
+              return <TouchableNativeFeedback onPress={() => navigate("EventDetails")}>
                 <View style={styles.item}>
                   <View style={{ width: 20, height: 20, marginTop: 10, backgroundColor: colors[i] }}></View>
                   <View>
@@ -130,6 +137,7 @@ export default class EventsScreen extends React.Component {
           }
         </View>
       </ScrollView>
+      </PTRView>
     );
   }
 }
