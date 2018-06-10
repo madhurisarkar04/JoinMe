@@ -16,13 +16,9 @@ import {
   Button,
   Text,
   View,
-<<<<<<< HEAD
   TouchableOpacity,
-  Image
-=======
   Image,
   FlatList
->>>>>>> 1a1cea38942ad6ef9f751549dcd55e8bdafbc6b3
 } from 'react-native';
 import Search from 'react-native-search-box';
 
@@ -101,14 +97,7 @@ export default class EventsScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-<<<<<<< HEAD
-    // flex: 1,
-    //justifyContent: 'center',
-    //alignItems: 'center',
-    marginTop: 20,
-=======
     flex: 1,
->>>>>>> 1a1cea38942ad6ef9f751549dcd55e8bdafbc6b3
     backgroundColor: '#F5FCFF',
     alignItems: 'stretch'
   },
