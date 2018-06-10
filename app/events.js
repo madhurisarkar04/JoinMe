@@ -23,6 +23,7 @@ import {
   TouchableNativeFeedback
 } from 'react-native';
 import Search from 'react-native-search-box';
+//import SearchBar from 'react-native-searchbar';
 import { EventService } from './service/eventService';
 import EventDetailScreen from './eventDetails';
 
@@ -50,10 +51,12 @@ export default class EventsScreen extends React.Component {
   constructor() {
     super();
     this.state = {
-      events: []
+      events: [],
+      results: []
     };
 
     this.refreshEventsData = this.refreshEventsData.bind(this);
+    this.handleResults = this.handleResults.bind(this);
   }
 
   componentDidMount() {
@@ -80,6 +83,11 @@ export default class EventsScreen extends React.Component {
     });
   }
 
+  handleResults(results) {
+    debugger;
+    this.setState({ events: this.state.events.filter((e,i)=>{ return e.name.indexOf(results) != -1 || e.description.indexOf(results) != -1})||[] });
+  }
+
   componentDidUpdate() {
     var events = this.eventService.getEvents();
     if (this.state.events != events)
@@ -90,19 +98,29 @@ export default class EventsScreen extends React.Component {
 
   render() {
     const { navigate } = this.props.navigation;
-    const colors=['#609','#f1d543','#5cf143','#d843f1','#43d8f1']
+    const colors = ['#609', '#f1d543', '#5cf143', '#d843f1', '#43d8f1']
     return (
       <ScrollView>
         <View style={styles.container}>
           <Search
             ref="search_box"
+            placeholder="Search"
+            backgroundColor="#5fba7de6"
+            inputBorderRadius={0}
+            onSearch={this.handleResults}
           />
+          {/* <SearchBar
+          ref={(ref) => this.searchBar = ref}
+          data={this.state.events}
+          handleResults={this.handleResults}
+          showOnLoad
+        /> */}
 
           {
-            this.state.events.map((e,i) => {
-              return <TouchableNativeFeedback onPress={() => navigate("EventDetails",{eventId:e.id})}>
+            this.state.events.map((e, i) => {
+              return <TouchableNativeFeedback >
                 <View style={styles.item}>
-                <View style={{width:20, height:20,marginTop:10, backgroundColor:colors[i]}}></View>
+                  <View style={{ width: 20, height: 20, marginTop: 10, backgroundColor: colors[i] }}></View>
                   <View>
                     <Text style={{ fontSize: 22, paddingLeft: 15 }}>{e.name}</Text>
                     <Text style={{ fontSize: 12, paddingLeft: 15 }}>{e.description}</Text>
