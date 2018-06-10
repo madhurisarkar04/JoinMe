@@ -18,6 +18,7 @@ import {
 } from 'react-native';
 import Search from 'react-native-search-box';
 import { GroupService } from './service/groupService';
+import PTRView from 'react-native-pull-to-refresh';
 
 export class Group {
   constructor(args) {
@@ -70,10 +71,16 @@ export default class GroupScreen extends React.Component {
       </TouchableOpacity>) // custom component
     };
   };
+  _refresh() {
+    return new Promise((resolve) => {
+        setTimeout(() => { resolve() }, 2000)
+    });
+}
 
   render() {
     const { navigate } = this.props.navigation;
     return (
+      <PTRView onRefresh={this._refresh} >
       <ScrollView>
         <View style={styles.container}>
           <Search
@@ -96,6 +103,7 @@ export default class GroupScreen extends React.Component {
           </View>
         </View>
       </ScrollView>
+      </PTRView>
     );
   }
 }
