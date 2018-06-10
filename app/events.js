@@ -29,6 +29,7 @@ import EventDetailScreen from './eventDetails';
 
 export default class EventsScreen extends React.Component {
 
+  allEvents = [];
   static navigationOptions = ({ navigation }) => {
     const { params = {} } = navigation.state;
 
@@ -55,44 +56,32 @@ export default class EventsScreen extends React.Component {
       results: []
     };
 
-    this.refreshEventsData = this.refreshEventsData.bind(this);
     this.handleResults = this.handleResults.bind(this);
+    this.loadEvents = this.loadEvents.bind(this);
   }
 
   componentDidMount() {
-    this.setState({
-      events: this.eventService.getEvents() || []
-    });
+   this.loadEvents();
 
     this.sub = DeviceEventEmitter.addListener('refreshData', (e) => {
-      var events = this.eventService.getEvents();
-      setTimeout(() => {
-        this.setState({
-          events: events || []
-        });
-      }, 500);
-
-      this.refreshEventsData();
+     this.loadEvents();
     });
   }
 
-  refreshEventsData() {
+  loadEvents(){
+    this.allEvents  = this.eventService.getEvents() || [];
     this.setState({
-      events: this.eventService.getEvents() || []
+      events:  this.allEvents
     });
   }
 
   handleResults(results) {
-    debugger;
-    this.setState({ events: this.state.events.filter((e,i)=>{ return e.name.indexOf(results) != -1 || e.description.indexOf(results) != -1})||[] });
-  }
-
-  componentDidUpdate() {
-    var events = this.eventService.getEvents();
-    if (this.state.events != events)
-      this.setState({
-        events: events || []
-      });
+    var events = this.allEvents.filter((e,i)=>{ 
+      return e.name.indexOf(results) != -1 || 
+      e.description.indexOf(results) != -1});
+    this.setState({ 
+      events: events ||[]
+     });
   }
 
   render() {
