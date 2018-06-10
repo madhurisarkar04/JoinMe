@@ -13,7 +13,8 @@ import {
   Switch,
   View,
   Image,
-  ScrollView,   
+  ScrollView,  
+  DeviceEventEmitter, 
   TouchableNativeFeedback
 } from 'react-native';
 import Search from 'react-native-search-box';
@@ -40,6 +41,7 @@ export default class EventForm extends React.Component {
     };
 
     this.onChange = this.onChange.bind(this);
+    this.createEvent = this.createEvent.bind(this);
   }
 
   createEvent(){
@@ -53,6 +55,9 @@ export default class EventForm extends React.Component {
             
         }        
     }
+
+    DeviceEventEmitter.emit('refreshData',  {});
+    this.props.navigation.navigate('Events',{name:'jaskjas'});
   }
 
   onChange(updatedEvent){
@@ -81,7 +86,7 @@ export default class EventForm extends React.Component {
                 Description
             </Text>
             <TextInput
-            style={{fontSize: 20}}
+            style={{fontSize: 20, margin:0}}
             multiline={true}
             numberOfLines={4}
             value={this.state.event.description}
@@ -160,7 +165,7 @@ export default class EventForm extends React.Component {
             </View>
 
             <TouchableNativeFeedback
-                onPress={this._onPressButton}
+                onPress={this.createEvent}
                 background={TouchableNativeFeedback.SelectableBackground()}>
                 <View style={styles.btnContainer}>
                     <Text style={styles.primaryBtn}>Create Event</Text>

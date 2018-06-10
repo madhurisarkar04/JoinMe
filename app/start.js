@@ -16,17 +16,14 @@ import GroupScreen from './groups';
 import ProfileScreen from './profile';
 import Home from './home';
 import EventForm from './eventForm';
+import GroupDetailsScreen from './groupDetails';
 
 export default StackNavigator({
     Home: { screen: Home },
-    Events: { screen: StackNavigator({
-            EventsScreen:{
-                screen: EventsScreen,
-            },
-        })
-     },
+    Events: { screen: EventsScreen},
     Group: { screen: GroupScreen },
     Profile: { screen: ProfileScreen },
     NewEvent:{screen: EventForm},
+    GroupDetailsScreen:{screen:GroupDetailsScreen},
     EventDetails:{screen:EventDetailsScreen},
 });

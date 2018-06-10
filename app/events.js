@@ -17,15 +17,17 @@ import {
   Text,
   View,
   TouchableOpacity,
+  DeviceEventEmitter,
   Image,
   FlatList
 } from 'react-native';
 import Search from 'react-native-search-box';
+import { EventService } from './service/eventService';
 
 export default class EventsScreen extends React.Component {
 
   static navigationOptions = ({ navigation }) => {
-    const { params = {} } = navigation.state;
+  const { params = {} } = navigation.state;
 
     return {
       title: "Events",
@@ -41,8 +43,47 @@ export default class EventsScreen extends React.Component {
             </TouchableOpacity>) // custom component
     };
   };
+
+  eventService = new EventService();
   constructor(){
     super();
+    this.state = {
+      events:[]
+    };
+
+    this.refreshEventsData = this.refreshEventsData.bind(this);
+  }
+  
+  componentDidMount(){
+    this.setState({
+      events: this.eventService.getEvents() || []
+    });
+
+    this.sub = DeviceEventEmitter.addListener('refreshData', (e)=>{
+      var events = this.eventService.getEvents();
+      alert(events.map(e=> e.name).join(',') + 'triger', events.map(e=> e.name).join(''));
+      setTimeout(()=>{
+        this.setState({
+          events: events || []
+        });
+      },500);
+      
+      this.refreshEventsData();
+    });
+  }
+
+  refreshEventsData(){
+    this.setState({
+      events: this.eventService.getEvents() || []
+    });
+  }
+
+  componentDidUpdate(){
+    var events = this.eventService.getEvents();
+    if(this.state.events != events)
+    this.setState({
+      events: events || []
+    });
   }
 
   render() {
@@ -53,42 +94,21 @@ export default class EventsScreen extends React.Component {
           <Search
             ref="search_box"
           />
-          <FlatList
-            data={[
-              {
-                key: 1,
-                name: "Event1",
-                color: "#8d1845"
-              },
-              {
-                key: 2,
-                name: "Event2",
-                color: "blue"
-              },
-              {
-                key: 3,
-                name: "Event3",
-                color: "#188d2a"
-              }, {
-                key: 4,
-                name: "Event4",
-                color: "#05a59b"
-              }
 
-            ]}
-            renderItem={({ item }) => <View style={styles.item}>
-              <View style={{ width: 20, height: 20, marginTop: 10, backgroundColor: item.color }}>
-
+          {
+            this.state.events.map(e=>{
+              return <View>
+                <View style={{ width: 20, height: 20, marginTop: 10, backgroundColor: e.color }}>
+                  </View>
+                  <View>
+                    <Text style={{ fontSize: 22, paddingLeft: 15 }}>{e.name}</Text>
+                    <Text style={{ fontSize: 12, paddingLeft: 15 }}>
+                      <Text style={{ marginLeft: 15 }}>{e.description}</Text>
+                    </Text>
+                  </View>
               </View>
-              <View>
-                <Text style={{ fontSize: 22, paddingLeft: 15 }}>{item.name}</Text>
-                <Text style={{ fontSize: 12, paddingLeft: 15 }}>
-                  <Text>XYZ</Text>
-                  <Text style={{ marginLeft: 15 }}>XYZ</Text>
-                </Text>
-              </View>
-            </View>}
-          />
+            })
+          }
         </View>
       </ScrollView>
     );
