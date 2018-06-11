@@ -8,6 +8,8 @@ export class Event{
         this.endDate = args.endDate;
         this.location = args.location;
         this.isBillable = args.isBillable;
+        this.totalFare = args.totalFare;
+        this.participants = args.participants;
     }
 }
 

@@ -35,6 +35,10 @@ export class EventService{
         return EventService.events;
     }
 
+    getEventById(eventId){
+return EventService.events.filter(e=> e.id == eventId)[0];
+    }
+
     updateEvent(event){
         EventService.events = EventService.events.map((e)=>{
             return e.id == event.id? event: e;
