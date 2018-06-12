@@ -13,7 +13,7 @@ import {
   Image
 } from 'react-native';
 import AppStart from './app/start';
-
+console.disableYellowBox = true;
 
 export default class App extends Component {
   render() {

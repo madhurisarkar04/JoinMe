@@ -40,7 +40,8 @@ export default class GroupDetailsScreen extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            text: props.navigation.state.params.name
+            groupName: props.navigation.state.params.groupDetails.name,
+            groupDetails: props.navigation.state.params.groupDetails
         };
         this.groupSelected = {
             id: '4',
@@ -79,8 +80,26 @@ export default class GroupDetailsScreen extends React.Component {
         title: 'Group Details'
     };
 
+    modifyGroupDetails() {
+        var grpDetails = this.state.groupDetails;
+        grpDetails.name = this.state.groupName;
+        this.setState({
+            groupDetails: grpDetails
+        });
+        this.props.navigation.state.params.updateGroupDetails(grpDetails);
+        this.popupDialog.dismiss();
+    }
+
+    readRegisteredContacts() {
+        simpleContacts.getContacts().then((contacts) => {
+            console.log(contacts);
+        });
+
+    }
+
     render() {
         const { navigate } = this.props.navigation;
+        var context = this;
         return (
             // <ScrollView>
             //     <View style={styles.container}>
@@ -144,26 +163,24 @@ export default class GroupDetailsScreen extends React.Component {
                         containerStyle={styles.popupContainer} dialogTitle={<DialogTitle title="Edit Group Name" />} ref={(popupDialog) => { this.popupDialog = popupDialog; }} height={350}
                     >
                         <View style={styles.popupInnerContainer}>
-                            {/* <Text style={styles.label}>
-                            {this.props.navigation.state.params.name}
-                        </Text> */}
                             <TextInput
                                 style={styles.formInput}
                                 keyboardType='text'
-                                value={this.props.navigation.state.params.name}
+                                value={this.state.groupName}
+                                onChangeText={(text) => this.setState({ groupName: text })}
                                 placeholder="Edit your group name!"
 
                             />
                             <View style={styles.btnContainer}>
                                 <TouchableNativeFeedback
-                                    onPress={this.createEvent}
+                                    onPress={this.modifyGroupDetails.bind(context)}
                                     background={TouchableNativeFeedback.SelectableBackground()}>
                                     <View style={styles.btnContainerAdd}>
-                                        <Text style={styles.primaryBtn}>Add</Text>
+                                        <Text style={styles.primaryBtn}>Update</Text>
                                     </View>
                                 </TouchableNativeFeedback>
                                 <TouchableNativeFeedback
-                                    onPress={() => { navigate('EventsDetails', { eventId: 1 }) }}
+                                    onPress={() => this.popupDialog.dismiss()}
                                     background={TouchableNativeFeedback.SelectableBackground()}>
                                     <View style={styles.btnContainerCancel}>
                                         <Text style={styles.primaryBtn}>Cancel</Text>
@@ -182,7 +199,7 @@ export default class GroupDetailsScreen extends React.Component {
                                 <View style={styles.groupcss} >
                                     {/* <Image style={styles.itemImg} source={require('./images/groupimage.jpg')}></Image> */}
                                     <View style={styles.gropuContent}>
-                                        <Text style={styles.grpname}>{this.props.navigation.state.params.name}</Text>
+                                        <Text style={styles.grpname}>{this.state.groupDetails.name}</Text>
                                     </View>
                                     <TouchableNativeFeedback style={[styles.btnCss, styles.itemContent]} onPress={() => {
                                         this.popupDialog.show();
@@ -192,21 +209,15 @@ export default class GroupDetailsScreen extends React.Component {
                                         </View>
                                     </TouchableNativeFeedback >
                                 </View>
-                                {/* <TouchableNativeFeedback style={[styles.btnCss, styles.itemContent]} >
-                                        <Text style={styles.exitBtn}>Exit Groups</Text>
-                                    </TouchableNativeFeedback> */}
                             </View>
                         </View>
-                        {/* <Text style={styles.eventLocationText}>
-                                {eventDetails.eventLocation}
-                            </Text> */}
                     </ImageBackground>
                     <Text style={styles.participantsName}>{this.groupSelected.users.length} Participants</Text>
                     <View style={[styles.eventDescriptionContainer, styles.userCss]}>
                         <View style={[styles.itemCss, styles.contactsCss]}>
                             <ScrollView>
                                 <View>
-                                    <TouchableNativeFeedback>
+                                    <TouchableNativeFeedback onpress={this.readRegisteredContacts.bind(this)}>
                                         <View style={styles.userItemCss} >
                                             <Image style={styles.itemImg} source={require('./images/addUser.png')}></Image>
                                             <View style={styles.itemContent}>
@@ -427,15 +438,18 @@ const styles = StyleSheet.create({
     },
     btnContainerAdd: {
         marginTop: 15,
+        // flexDirection: 'row',
+        // justifyContent: 'flex-end',
         alignItems: 'center',
         backgroundColor: '#00acec',
-
+        //  width: 50,
     },
 
     btnContainerCancel: {
         marginTop: 15,
         alignItems: 'center',
-        backgroundColor: '#d9534f'
+        backgroundColor: '#d9534f',
+        //width: 50
     },
     primaryBtn: {
         margin: 15,

@@ -1,4 +1,4 @@
-package com.saketaserviceapp;
+package com.evento;
 
 import android.app.Application;
 
