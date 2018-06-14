@@ -62,7 +62,7 @@ export default class Home extends Component {
                                 <Image style={styles.itemImg} source={require('./images/events.png')}></Image>
                                 <View style={styles.itemContent}>
                                     <Text style={styles.name}>Events</Text>
-                                    <Text style={styles.description}>Lorem Ipsum is simply dummy text of the printing.</Text>
+                                    <Text style={styles.description}>Add and organize all your events.</Text>
                                 </View>
                             </View>
                         </TouchableNativeFeedback>
@@ -71,7 +71,7 @@ export default class Home extends Component {
                                 <Image style={styles.itemImg} source={require('./images/groups.png')}></Image>
                                 <View style={styles.itemContent}>
                                     <Text style={styles.name}>Groups</Text>
-                                    <Text style={styles.description}>Lorem Ipsum is simply dummy text of the printing.</Text>
+                                    <Text style={styles.description}>Let's connect people and have fun.</Text>
                                 </View>
                             </View>
                         </TouchableNativeFeedback>
@@ -80,7 +80,7 @@ export default class Home extends Component {
                                 <Image style={styles.itemImg} source={require('./images/userDashboard.png')}></Image>
                                 <View style={styles.itemContent}>
                                     <Text style={styles.name}>My Profile</Text>
-                                    <Text style={styles.description}>Lorem Ipsum is simply dummy text of the printing.</Text>
+                                    <Text style={styles.description}>Manage all your information.</Text>
                                 </View>
                             </View>
                         </TouchableNativeFeedback >

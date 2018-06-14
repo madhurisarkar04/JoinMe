@@ -36,6 +36,7 @@ export default class GroupScreen extends React.Component {
     this.state = {
       groups: []
     }
+    this.addGroupDetails = this.addGroupDetails.bind(this);
 
   }
 
@@ -73,7 +74,7 @@ export default class GroupScreen extends React.Component {
       headerTitleStyle: {
         width: 100,
       },
-      headerRight: (<TouchableOpacity onPress={() => navigation.navigate("NewGroup")} title="New">
+      headerRight: (<TouchableOpacity onPress={() => navigation.navigate("NewGroup", { groupDetails: {}})} title="New">
         <Text> + New Group</Text>
       </TouchableOpacity>) // custom component
     };
@@ -93,6 +94,14 @@ export default class GroupScreen extends React.Component {
     var index = this.state.groups.findIndex((g) => { return g.id == groupDetails.id });
     this.state.groups[index] = groupDetails;
     this.groupService.updateGroup(groupDetails);
+    this.setState({
+      groups: this.state.groups
+    });
+  }
+
+  addGroupDetails(groupDetails) {
+    this.groupService.createGroup(groupDetails);
+    this.state.groups.push(groupDetails);
     this.setState({
       groups: this.state.groups
     });

@@ -19,6 +19,7 @@ import {
 } from 'react-native';
 import Search from 'react-native-search-box';
 import PopupDialog, { DialogTitle } from 'react-native-popup-dialog';
+import PTRView from 'react-native-pull-to-refresh';
 
 export class Group {
     constructor(args) {
