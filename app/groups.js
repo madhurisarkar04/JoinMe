@@ -79,6 +79,11 @@ export default class GroupScreen extends React.Component {
       </TouchableOpacity>) // custom component
     };
   };
+  _refresh() {
+    return new Promise((resolve) => {
+        setTimeout(() => { resolve() }, 2000)
+    });
+}
 
 
   handleResults(results) {
