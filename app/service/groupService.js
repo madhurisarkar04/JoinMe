@@ -2,6 +2,7 @@ import { Group } from '../models/models';
 
 export class GroupService {
     static counter = 0;
+    //static groups = [];
     static groups = [new Group({
         id: '1',
         name: 'Room mates',
@@ -46,7 +47,16 @@ export class GroupService {
     }
 
     getGroups() {
-        return GroupService.groups;
+         return GroupService.groups;
+        // return fetch('http://eventjoinme.azurewebsites.net/api/GroupUser/')
+        //     .then((response) => response.json())    
+        //     .then((responseJson) => {
+               
+        //        // return responseJson;
+        //     })
+        //     .catch((error) => {
+        //         console.error(error);
+        //     });
     }
 
     updateGroup(Group) {

@@ -25,6 +25,9 @@ import PopupDialog, { DialogTitle } from 'react-native-popup-dialog';
 import Modal from 'react-native-modal'
 import { Button } from 'react-native';
 import PTRView from 'react-native-pull-to-refresh';
+import { EventService } from './service/eventService';
+import { Event } from './models/models';
+
 
 
 export default class EventDetailScreen extends React.Component {
@@ -36,6 +39,67 @@ export default class EventDetailScreen extends React.Component {
             setTimeout(() => { resolve() }, 2000)
         });
     }
+
+    eventId = 0;
+    eventService = new EventService();
+    attendees =  [{
+        id: 1,
+        name: "Venkatesh",
+        email: 'venkatesh@gmail.com',
+        phoneNumber: '9190405060'
+    }, {
+        id: 2,
+        name: "Jyothi",
+        email: 'jyothi@gmail.com',
+        phoneNumber: '9190405061'
+    }, {
+        id: 3,
+        name: "Jyoti",
+        email: 'jyoti@gmail.com',
+        phoneNumber: '9190405063'
+    }, {
+        id: 4,
+        name: "Pavan",
+        email: 'pavan@gmail.com',
+        phoneNumber: '9190405160'
+    }, {
+        id: 5,
+        name: "Umesh",
+        email: 'umesh@gmail.com',
+        phoneNumber: '9190405360'
+    }, {
+        id: 6,
+        name: "Madhuri",
+        email: 'madhuri@gmail.com',
+        phoneNumber: '9198405060'
+    }];
+    constructor(props){
+        super();
+
+        this.state = {
+            event: new Event({})
+        };
+        
+        if(props.navigation.state.params && props.navigation.state.params.eventId){
+            this.eventId = props.navigation.state.params.eventId;
+        }
+
+        this.loadEventById = this.loadEventById.bind(this);
+    }
+
+    componentDidMount(){
+        this.loadEventById(this.eventId);
+    }
+
+    loadEventById(eventId){
+        var event  = this.eventService.getEventById(this.eventId);
+
+        this.setState({
+            event : {...event, attendees: this.attendees}
+        });
+        
+    }
+
     render() {
         const { navigate } = this.props.navigation;
         const eventDetails = {
@@ -99,7 +163,6 @@ export default class EventDetailScreen extends React.Component {
                                     keyboardType='numeric'
                                     value=""
                                     placeholder="Type your fare here!"
-
                                 />
                                 <Text style={styles.label}>
                                     Comment
@@ -136,7 +199,7 @@ export default class EventDetailScreen extends React.Component {
                                 <View style={styles.headerRule}>
 
                                     <Text style={styles.eventHeaderText}>
-                                        <Image source={require("./images/events.png")} style={styles.eventImg} /> {eventDetails.eventName}
+                                        <Image source={require("./images/events.png")} style={styles.eventImg} /> {this.state.event.name}
                                     </Text>
                                 </View>
                                 <Text style={styles.eventLocationText}>

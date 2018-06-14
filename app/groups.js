@@ -29,6 +29,7 @@ export class Group {
 }
 
 export default class GroupScreen extends React.Component {
+  allGroups;
   groupService = new GroupService();
   constructor() {
     super();
@@ -39,19 +40,25 @@ export default class GroupScreen extends React.Component {
   }
 
   componentDidMount() {
-    var groups = this.groupService.getGroups() || [];
-    this.setState({
-      groups: groups
-    });
-
+    this.loadGroups();
   }
 
-  componentDidUpdate() {
-    var groups = this.groupService.getGroups();
-    if (this.state.groups != groups)
-      this.setState({
-        groups: groups || []
-      });
+  _refresh() {
+    var context = this;
+    return new Promise((resolve) => {
+      //  setTimeout(() => { resolve() }, 2000)
+      context.loadGroups();
+    });
+  }
+  // componentDidUpdate() {
+  //   this.loadGroups();
+  // }
+
+  loadGroups() {
+    this.allGroups = this.groupService.getGroups();
+    this.setState({
+      groups: this.allGroups
+    });
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -77,32 +84,54 @@ export default class GroupScreen extends React.Component {
     });
 }
 
+
+  handleResults(results) {
+    var groups = this.allGroups.filter((e, i) => {
+      return e.name.toLowerCase().indexOf(results.toLowerCase()) != -1
+    });
+    this.setState({
+      groups: groups || []
+    });
+  }
+
+  updateGroupDetails(groupDetails) {
+    var index = this.state.groups.findIndex((g) => { return g.id == groupDetails.id });
+    this.state.groups[index] = groupDetails;
+    this.groupService.updateGroup(groupDetails);
+    this.setState({
+      groups: this.state.groups
+    });
+  }
+
   render() {
     const { navigate } = this.props.navigation;
     return (
       <PTRView onRefresh={this._refresh} >
-      <ScrollView>
-        <View style={styles.container}>
-          <Search
-            ref="search_box"
-          />
-          <View style={styles.bodyView}>
-            {this.state.groups.map((item) => {
-              return (<View>
-                <TouchableNativeFeedback onPress={() => navigate('GroupDetailsScreen', item)}>
-                  <View style={styles.itemCss} >
-                    <Image style={styles.itemImg} source={require('./images/groupimage.jpg')}></Image>
-                    <View style={styles.itemContent}>
-                      <Text style={styles.name}>{item.name}</Text>
+        <ScrollView>
+          <View style={styles.container}>
+            <Search
+              ref="search_box"
+              placeholder="Search"
+              backgroundColor="#5fba7de6"
+              inputBorderRadius={0}
+              onSearch={this.handleResults.bind(this)}
+            />
+            <View style={styles.bodyView}>
+              {this.state.groups.map((item) => {
+                return <View>
+                  <TouchableNativeFeedback onPress={() => navigate('GroupDetailsScreen', { groupDetails: item, updateGroupDetails: this.updateGroupDetails.bind(this) })}>
+                    <View style={styles.itemCss} >
+                      <Image style={styles.itemImg} source={require('./images/groupimage.jpg')}></Image>
+                      <View style={styles.itemContent}>
+                        <Text style={styles.name}>{item.name}</Text>
+                      </View>
                     </View>
-                  </View>
-                </TouchableNativeFeedback>
-              </View>)
-            })}
-
+                  </TouchableNativeFeedback>
+                </View>
+              })}
+            </View>
           </View>
-        </View>
-      </ScrollView>
+        </ScrollView>
       </PTRView>
     );
   }

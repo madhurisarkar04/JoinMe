@@ -14,19 +14,39 @@ import {
     Image, TouchableNativeFeedback
 } from 'react-native';
 import EventsScreen from './events';
+import { UserService } from './service/userServie';
 
 export default class Home extends Component {
+    userService;
     static navigationOptions = {
         title: 'JOIN ME',
         headerStyle: {
             display: 'none'
         }
     };
+
     constructor() {
         super();
+        this.state = {
+            users: [],
+            currentUser: {}
+        };
         this.onEventsPressButton = this.onEventsPressButton.bind(this);
     }
-
+    userService = new UserService();
+    componentDidMount() {
+        this.userService.getAllUsers().then((user) => {
+            debugger;
+            this.setState({
+                users: users
+            })
+        });
+        this.userService.getUserById(1).then((user) => {
+            this.setState({
+                currentUser: user
+            })
+        });
+    }
     onEventsPressButton() {
         navigate('Events', { name: 'Jane' })
     }
@@ -35,36 +55,36 @@ export default class Home extends Component {
         const { navigate } = this.props.navigation;
         return (
             <ScrollView>
-            <View style={styles.container}>
-                <View style={styles.bodyContent}>
-                    <TouchableNativeFeedback onPress={() => navigate('Events', { name: 'Jane' })} >
-                        <View style={styles.itemCss} >
-                            <Image style={styles.itemImg} source={require('./images/events.png')}></Image>
-                            <View style={styles.itemContent}>
-                                <Text style={styles.name}>Events</Text>
-                                <Text style={styles.description}>Lorem Ipsum is simply dummy text of the printing.</Text>
+                <View style={styles.container}>
+                    <View style={styles.bodyContent}>
+                        <TouchableNativeFeedback onPress={() => navigate('Events', { name: 'Jane' })} >
+                            <View style={styles.itemCss} >
+                                <Image style={styles.itemImg} source={require('./images/events.png')}></Image>
+                                <View style={styles.itemContent}>
+                                    <Text style={styles.name}>Events</Text>
+                                    <Text style={styles.description}>Lorem Ipsum is simply dummy text of the printing.</Text>
+                                </View>
                             </View>
-                        </View>
-                    </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={() => navigate('Group', { name: 'Jane' })} >
-                        <View style={styles.itemCss}>
-                            <Image style={styles.itemImg} source={require('./images/groups.png')}></Image>
-                            <View style={styles.itemContent}>
-                                <Text style={styles.name}>Groups</Text>
-                                <Text style={styles.description}>Lorem Ipsum is simply dummy text of the printing.</Text>
+                        </TouchableNativeFeedback>
+                        <TouchableNativeFeedback onPress={() => navigate('Group', {users:this.state.users,currentUser:this.state.currentUser})} >
+                            <View style={styles.itemCss}>
+                                <Image style={styles.itemImg} source={require('./images/groups.png')}></Image>
+                                <View style={styles.itemContent}>
+                                    <Text style={styles.name}>Groups</Text>
+                                    <Text style={styles.description}>Lorem Ipsum is simply dummy text of the printing.</Text>
+                                </View>
                             </View>
-                        </View>
-                    </TouchableNativeFeedback>
-                    <TouchableNativeFeedback onPress={() => navigate('Profile', { name: 'Jane' })} >
-                        <View style={styles.itemCss}>
-                            <Image style={styles.itemImg} source={require('./images/userDashboard.png')}></Image>
-                            <View style={styles.itemContent}>
-                                <Text style={styles.name}>My Profile</Text>
-                                <Text style={styles.description}>Lorem Ipsum is simply dummy text of the printing.</Text>
+                        </TouchableNativeFeedback>
+                        <TouchableNativeFeedback onPress={() => navigate('Profile', { name: 'Jane' })} >
+                            <View style={styles.itemCss}>
+                                <Image style={styles.itemImg} source={require('./images/userDashboard.png')}></Image>
+                                <View style={styles.itemContent}>
+                                    <Text style={styles.name}>My Profile</Text>
+                                    <Text style={styles.description}>Lorem Ipsum is simply dummy text of the printing.</Text>
+                                </View>
                             </View>
-                        </View>
-                    </TouchableNativeFeedback >
-                    {/* <TouchableNativeFeedback onPress={() => navigate('EventDetails', { eventId: 1 })} >
+                        </TouchableNativeFeedback >
+                        {/* <TouchableNativeFeedback onPress={() => navigate('EventDetails', { eventId: 1 })} >
                         <View style={styles.itemCss}>
                             <Image style={styles.itemImg} source={require('./images/events.png')}></Image>
                             <View style={styles.itemContent}>
@@ -73,8 +93,8 @@ export default class Home extends Component {
                             </View>
                         </View>
                     </TouchableNativeFeedback > */}
+                    </View>
                 </View>
-            </View>
             </ScrollView>
         );
     }

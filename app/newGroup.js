@@ -12,9 +12,9 @@ import {
     FlatList
   } from 'react-native';
 
-export default class EventsScreen extends React.Component {
+export default class NewGroupScreen extends React.Component {
     render(){
-        return <View style={styles.container}></View>
+       
     }
 }
 
