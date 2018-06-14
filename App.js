@@ -16,6 +16,10 @@ import AppStart from './app/start';
 console.disableYellowBox = true;
 
 export default class App extends Component {
+ 
+  constructor() {
+    super();
+  }
   render() {
     return (
       <View style={styles.container}>

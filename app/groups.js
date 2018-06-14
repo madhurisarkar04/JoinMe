@@ -109,7 +109,7 @@ export default class GroupScreen extends React.Component {
               placeholder="Search"
               backgroundColor="#5fba7de6"
               inputBorderRadius={0}
-              onSearch={this.handleResults}
+              onSearch={this.handleResults.bind(this)}
             />
             <View style={styles.bodyView}>
               {this.state.groups.map((item) => {

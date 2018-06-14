@@ -90,6 +90,14 @@ export default class GroupDetailsScreen extends React.Component {
         this.popupDialog.dismiss();
     }
 
+    _refresh() {
+        var context = this;
+        return new Promise((resolve) => {
+          //  setTimeout(() => { resolve() }, 2000)
+          context.loadGroups();
+        });
+      }
+
     readRegisteredContacts() {
         simpleContacts.getContacts().then((contacts) => {
             console.log(contacts);
@@ -157,6 +165,7 @@ export default class GroupDetailsScreen extends React.Component {
             //         </ScrollView>
             //     </View>
             // </ScrollView>
+            <PTRView onRefresh={this._refresh} >
             <ScrollView>
                 <View>
                     <PopupDialog
@@ -245,6 +254,7 @@ export default class GroupDetailsScreen extends React.Component {
 
                 </View>
             </ScrollView >
+            </PTRView>
         );
     }
 }
